@@ -33,11 +33,11 @@ public class LoginController {
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVO loginVO) {
+    public Result<String> doLogin(HttpServletResponse response, @Valid LoginVO loginVO) {
         log.info("【用户登录】" + loginVO.toString());
 
         //登录
-        seckillUserService.login(response, loginVO);
-        return Result.success(true);
+        String token = seckillUserService.login(response, loginVO);
+        return Result.success(token);
     }
 }

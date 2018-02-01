@@ -6,14 +6,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class SeckillApplication extends SpringBootServletInitializer {
+public class SeckillApplication  {
 
     public static void main(String[] args) {
         SpringApplication.run(SeckillApplication.class, args);
     }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(SeckillApplication.class);
-    }
 }

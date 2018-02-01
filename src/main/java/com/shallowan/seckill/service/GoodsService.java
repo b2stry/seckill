@@ -1,7 +1,6 @@
 package com.shallowan.seckill.service;
 
 import com.shallowan.seckill.dao.GoodsDao;
-import com.shallowan.seckill.domain.Goods;
 import com.shallowan.seckill.domain.SeckillGoods;
 import com.shallowan.seckill.vo.GoodsVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class GoodsService {
 
     public void reduceStock(GoodsVO goods) {
         SeckillGoods g = new SeckillGoods();
-        g.setId(goods.getId());
+        g.setGoodsId(goods.getId());
         goodsDao.reduceStock(g);
     }
 }

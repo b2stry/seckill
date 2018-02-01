@@ -14,7 +14,7 @@ public class SeckillUser {
     private String password;
     private String salt;
     private String head;
-    private Date tegisterDate;
+    private Date registerDate;
     private Date lastLoginDate;
     private Integer loginCount;
 
@@ -26,7 +26,7 @@ public class SeckillUser {
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
                 ", head='" + head + '\'' +
-                ", tegisterDate=" + tegisterDate +
+                ", tegisterDate=" + registerDate +
                 ", lastLoginDate=" + lastLoginDate +
                 ", loginCount=" + loginCount +
                 '}';

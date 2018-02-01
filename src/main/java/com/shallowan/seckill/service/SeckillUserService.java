@@ -34,7 +34,7 @@ public class SeckillUserService {
         return seckillUserDao.getByid(id);
     }
 
-    public boolean login(HttpServletResponse response, LoginVO loginVO) {
+    public String login(HttpServletResponse response, LoginVO loginVO) {
         if (loginVO == null) {
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
@@ -57,7 +57,7 @@ public class SeckillUserService {
         String token = UUIDUtil.uuid();
         //生成cookie
         addCookie(response, token, user);
-        return true;
+        return token;
     }
 
     public SeckillUser getByToken(HttpServletResponse response, String token) {
