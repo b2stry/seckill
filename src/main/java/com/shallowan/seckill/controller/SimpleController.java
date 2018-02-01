@@ -1,0 +1,83 @@
+package com.shallowan.seckill.controller;
+
+import com.shallowan.seckill.domain.User;
+import com.shallowan.seckill.redis.RedisService;
+import com.shallowan.seckill.redis.UserKey;
+import com.shallowan.seckill.result.CodeMsg;
+import com.shallowan.seckill.result.Result;
+import com.shallowan.seckill.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author ShallowAn
+ */
+@Controller
+@RequestMapping("/demo")
+public class SimpleController {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RedisService redisSerice;
+
+    @RequestMapping("/hello")
+    @ResponseBody
+    public Result<String> hello() {
+        return Result.success("hello,imooc");
+    }
+
+    @RequestMapping("/error")
+    @ResponseBody
+    public Result<String> error() {
+        return Result.error(CodeMsg.SERVER_ERROR);
+    }
+
+    @RequestMapping("/thymeleaf")
+    public String thymeleaf(Model model) {
+        model.addAttribute("name", "shallowan");
+        return "hello";
+    }
+
+    @RequestMapping("/db")
+    @ResponseBody
+    public Result<User> dbGet() {
+        User user = userService.getById(1);
+        return Result.success(user);
+    }
+
+    @RequestMapping("/db/tx")
+    @ResponseBody
+    public Result<Boolean> dbTx() {
+        boolean b = userService.tx();
+        return Result.success(b);
+    }
+
+    @RequestMapping("/redis/get")
+    @ResponseBody
+    public Result<List<User>> redisGet() {
+        User user = redisSerice.get(UserKey.getById, "1", User.class);
+        User user2 = redisSerice.get(UserKey.getById, "2", User.class);
+        List<User> userList = new ArrayList<>();
+        userList.add(user);
+        userList.add(user2);
+        return Result.success(userList);
+    }
+
+    @RequestMapping("/redis/set")
+    @ResponseBody
+    public Result<Boolean> redisSet() {
+        User user = new User();
+        user.setId(2);
+        user.setName("222222");
+        boolean ret = redisSerice.set(UserKey.getById, "2", user);
+        return Result.success(ret);
+    }
+}
