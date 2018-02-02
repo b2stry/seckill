@@ -11,6 +11,7 @@ import com.shallowan.seckill.util.UUIDUtil;
 import com.shallowan.seckill.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author ShallowAn
+ * <p>
+ * service只能调service
+ * service只能调自己的dao
  */
 @Service
 public class SeckillUserService {
@@ -31,7 +35,37 @@ public class SeckillUserService {
     private RedisService redisService;
 
     public SeckillUser getById(long id) {
-        return seckillUserDao.getByid(id);
+        //取缓存
+        SeckillUser user = redisService.get(SeckillUserKey.getById, "" + id, SeckillUser.class);
+        if (user != null) {
+            return user;
+        }
+
+        //取数据库
+        user = seckillUserDao.getByid(id);
+        if (user != null) {
+            redisService.set(SeckillUserKey.getById, "" + id, user);
+        }
+        return user;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updatePassword(String token, long id, String passwordNew) {
+        //取user
+        SeckillUser user = getById(id);
+        if (user == null) {
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        //更新数据库
+        SeckillUser toUpdateUpdate = new SeckillUser();
+        toUpdateUpdate.setId(id);
+        toUpdateUpdate.setPassword(MD5Util.FormPassToDBPass(passwordNew, user.getSalt()));
+        seckillUserDao.update(toUpdateUpdate);
+        //处理缓存
+        redisService.delete(SeckillUserKey.getById, "" + id);
+        user.setPassword(toUpdateUpdate.getPassword());
+        redisService.set(SeckillUserKey.token, token, user);
+        return true;
     }
 
     public String login(HttpServletResponse response, LoginVO loginVO) {
