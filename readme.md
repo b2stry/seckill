@@ -1,4 +1,4 @@
-## 高并发的瓶颈在数据库
+## ![](https://raw.githubusercontent.com/b2stry/imgrepo/master/2018.png)高并发的瓶颈在数据库
 ### 减少数据库访问
 思路：<br>
 1.系统初始化，把商品库存数量加载到Redis<br>
@@ -8,6 +8,7 @@
 5.客户端轮询，是否秒杀成功
 <hr>
 <br>
+
 
 ### 项目框架
 1.Spring Boot环境搭建<br>
