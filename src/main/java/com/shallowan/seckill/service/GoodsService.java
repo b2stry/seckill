@@ -24,9 +24,19 @@ public class GoodsService {
         return goodsDao.getGoodsVOByGoodsId(goodsId);
     }
 
-    public void reduceStock(GoodsVO goods) {
+    public boolean reduceStock(GoodsVO goods) {
         SeckillGoods g = new SeckillGoods();
         g.setGoodsId(goods.getId());
-        goodsDao.reduceStock(g);
+        int ret = goodsDao.reduceStock(g);
+        return ret > 0;
+    }
+
+    public void resetStock(List<GoodsVO> goodsList) {
+        for(GoodsVO goods : goodsList ) {
+            SeckillGoods g = new SeckillGoods();
+            g.setGoodsId(goods.getId());
+            g.setStockCount(goods.getStockCount());
+            goodsDao.resetStock(g);
+        }
     }
 }

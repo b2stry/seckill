@@ -109,7 +109,6 @@ public class SeckillUserService {
 
     private void addCookie(HttpServletResponse response, String token, SeckillUser user) {
 
-
         redisService.set(SeckillUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         cookie.setMaxAge(SeckillUserKey.token.expireSeconds());

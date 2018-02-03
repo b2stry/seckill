@@ -1,5 +1,7 @@
 package com.shallowan.seckill.config;
 
+import com.shallowan.seckill.access.AccessInterceptor;
+import com.shallowan.seckill.access.AccessLimit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -20,6 +22,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    @Autowired
+    private AccessInterceptor accessInterceptor;
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 
@@ -28,8 +33,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/**");
-        super.addInterceptors(registry);
+//        registry.addInterceptor(loginInterceptor);
+        registry.addInterceptor(accessInterceptor);
     }
 }

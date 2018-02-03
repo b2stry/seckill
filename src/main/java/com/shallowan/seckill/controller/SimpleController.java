@@ -1,6 +1,7 @@
 package com.shallowan.seckill.controller;
 
 import com.shallowan.seckill.domain.User;
+import com.shallowan.seckill.rabbitmq.MQSender;
 import com.shallowan.seckill.redis.RedisService;
 import com.shallowan.seckill.redis.UserKey;
 import com.shallowan.seckill.result.CodeMsg;
@@ -9,6 +10,7 @@ import com.shallowan.seckill.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,6 +29,40 @@ public class SimpleController {
 
     @Autowired
     private RedisService redisSerice;
+
+    @Autowired
+    private MQSender sender;
+
+
+//    @GetMapping("/mq/header")
+//    @ResponseBody
+//    public Result<String> mqHeader() {
+//        sender.sendHeaders("hello,message");
+//        return Result.success("Hello,world");
+//    }
+//
+//    //swagger
+//    @GetMapping("/mq/fanout")
+//    @ResponseBody
+//    public Result<String> mqFanout() {
+//        sender.sendFanout("hello,message");
+//        return Result.success("Hello,world");
+//    }
+//
+//    @GetMapping("/mq/topic")
+//    @ResponseBody
+//    public Result<String> mqTopic() {
+//        sender.sendTopic("hello,message");
+//        return Result.success("Hello,world");
+//    }
+//
+//
+//    @GetMapping("/mq")
+//    @ResponseBody
+//    public Result<String> mq() {
+//        sender.send("hello,message");
+//        return Result.success("Hello,world");
+//    }
 
     @RequestMapping("/hello")
     @ResponseBody

@@ -1,5 +1,6 @@
 package com.shallowan.seckill.config;
 
+import com.shallowan.seckill.access.UserContext;
 import com.shallowan.seckill.domain.SeckillUser;
 import com.shallowan.seckill.service.SeckillUserService;
 import com.shallowan.seckill.util.CookieUtil;
@@ -33,17 +34,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
-
-        String paramToken = request.getParameter(SeckillUserService.COOKIE_NAME_TOKEN);
-        String cookieToken = CookieUtil.getCookieValue(request, SeckillUserService.COOKIE_NAME_TOKEN);
-
-        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
-            return null;
-        }
-        String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
-        return seckillUserService.getByToken(response, token);
+        return UserContext.getUser();
     }
 
 }
