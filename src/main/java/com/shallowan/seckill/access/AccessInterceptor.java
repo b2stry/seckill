@@ -55,7 +55,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
                 key += "_" + seckillUser.getId();
             }
 
-            //martin fower,重构-改善既有代码的设计
+            //martin fowler,重构-改善既有代码的设计
             AccessKey accessKey = AccessKey.withExpire(seconds);
             //查询访问的次数
             Integer count = redisService.get(accessKey, key, Integer.class);
