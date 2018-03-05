@@ -16,6 +16,7 @@ import com.shallowan.seckill.util.MD5Util;
 import com.shallowan.seckill.util.UUIDUtil;
 import com.shallowan.seckill.validator.NeedLogin;
 import com.shallowan.seckill.vo.GoodsVO;
+import io.swagger.annotations.ApiOperation;
 import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,11 +96,12 @@ public class SeckillController implements InitializingBean {
         }
 
         for (GoodsVO goodsVO : goodsVOList) {
-            redisService.set(GoodsKey.getSeckillGoodsStock, "" + goodsVO.getId(), goodsVO.getStockCount());
-            localOverMap.put(goodsVO.getId(), false);
-        }
+        redisService.set(GoodsKey.getSeckillGoodsStock, "" + goodsVO.getId(), goodsVO.getStockCount());
+        localOverMap.put(goodsVO.getId(), false);
     }
+}
 
+    @ApiOperation("db 数据重置接口")
     @GetMapping("/reset")
     @ResponseBody
     public Result<Boolean> reset() {
@@ -146,6 +148,7 @@ public class SeckillController implements InitializingBean {
 //
 //    }
 
+    @ApiOperation("秒杀接口")
     @PostMapping("/{path}/seckill")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)
@@ -187,6 +190,7 @@ public class SeckillController implements InitializingBean {
         return Result.success(0);
     }
 
+    @ApiOperation("秒杀路径获取接口")
     @GetMapping("/path")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)
@@ -212,6 +216,7 @@ public class SeckillController implements InitializingBean {
      * @param goodsId
      * @return
      */
+    @ApiOperation("轮询秒杀是否成功接口")
     @GetMapping("/result")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)
@@ -221,6 +226,7 @@ public class SeckillController implements InitializingBean {
         return Result.success(result);
     }
 
+    @ApiOperation("获取验证码接口")
     @GetMapping("/verifyCode")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)

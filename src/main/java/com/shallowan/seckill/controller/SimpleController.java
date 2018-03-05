@@ -7,6 +7,8 @@ import com.shallowan.seckill.redis.UserKey;
 import com.shallowan.seckill.result.CodeMsg;
 import com.shallowan.seckill.result.Result;
 import com.shallowan.seckill.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,24 +66,28 @@ public class SimpleController {
 //        return Result.success("Hello,world");
 //    }
 
+    @ApiOperation("初始化测试接口")
     @RequestMapping("/hello")
     @ResponseBody
     public Result<String> hello() {
         return Result.success("hello,imooc");
     }
 
+    @ApiOperation("error测试接口")
     @RequestMapping("/error")
     @ResponseBody
     public Result<String> error() {
         return Result.error(CodeMsg.SERVER_ERROR);
     }
 
+    @ApiOperation("thymeleaf测试接口")
     @RequestMapping("/thymeleaf")
     public String thymeleaf(Model model) {
         model.addAttribute("name", "shallowan");
         return "hello";
     }
 
+    @ApiOperation("db测试接口")
     @RequestMapping("/db")
     @ResponseBody
     public Result<User> dbGet() {
@@ -89,6 +95,7 @@ public class SimpleController {
         return Result.success(user);
     }
 
+    @ApiOperation("db事务测试接口")
     @RequestMapping("/db/tx")
     @ResponseBody
     public Result<Boolean> dbTx() {
@@ -96,6 +103,7 @@ public class SimpleController {
         return Result.success(b);
     }
 
+    @ApiOperation("redis get测试接口")
     @RequestMapping("/redis/get")
     @ResponseBody
     public Result<List<User>> redisGet() {
@@ -107,6 +115,7 @@ public class SimpleController {
         return Result.success(userList);
     }
 
+    @ApiOperation("redis set测试接口")
     @RequestMapping("/redis/set")
     @ResponseBody
     public Result<Boolean> redisSet() {

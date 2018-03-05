@@ -5,6 +5,7 @@ import com.shallowan.seckill.redis.RedisService;
 import com.shallowan.seckill.result.Result;
 import com.shallowan.seckill.service.SeckillUserService;
 import com.shallowan.seckill.vo.LoginVO;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +22,8 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
-    @Autowired
-    private RedisService redisSerice;
 
-    @Autowired
-    private SeckillUserService seckillUserService;
-
-
+    @ApiOperation(value = "获取用户信息", notes = "获取用户信息")
     @RequestMapping("/info")
     @ResponseBody
     public Result<SeckillUser> doLogin(SeckillUser seckillUser) {

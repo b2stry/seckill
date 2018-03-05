@@ -4,6 +4,7 @@ import com.shallowan.seckill.redis.RedisService;
 import com.shallowan.seckill.result.Result;
 import com.shallowan.seckill.service.SeckillUserService;
 import com.shallowan.seckill.vo.LoginVO;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,13 @@ public class LoginController {
     @Autowired
     private SeckillUserService seckillUserService;
 
+    @ApiOperation("获取登录界面接口")
     @RequestMapping("/to_login")
     public String toLogin() {
         return "login";
     }
 
+    @ApiOperation("登录接口")
     @RequestMapping("/do_login")
     @ResponseBody
     public Result<String> doLogin(HttpServletResponse response, @Valid LoginVO loginVO) {

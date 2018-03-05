@@ -11,6 +11,7 @@ import com.shallowan.seckill.service.OrderService;
 import com.shallowan.seckill.service.SeckillService;
 import com.shallowan.seckill.vo.GoodsVO;
 import com.shallowan.seckill.vo.OrderDetailVO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-    @Autowired
-    private RedisService redisService;
 
     @Autowired
     private OrderService orderService;
@@ -32,6 +31,7 @@ public class OrderController {
     @Autowired
     private GoodsService goodsService;
 
+    @ApiOperation("订单详情接口")
     @GetMapping("/detail")
     @ResponseBody
     public Result<OrderDetailVO> seckill(SeckillUser seckillUser,

@@ -7,6 +7,7 @@ import com.shallowan.seckill.result.Result;
 import com.shallowan.seckill.service.GoodsService;
 import com.shallowan.seckill.vo.GoodsDetailVO;
 import com.shallowan.seckill.vo.GoodsVO;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -60,6 +61,7 @@ public class GoodsController {
      * @param user
      * @return
      */
+    @ApiOperation("获取商品列表")
     @GetMapping(value = "/to_list", produces = "text/html")
     @ResponseBody
     public String list(HttpServletRequest request, HttpServletResponse response, Model model, SeckillUser user) {
@@ -88,6 +90,7 @@ public class GoodsController {
 
     }
 
+    @ApiOperation("单个商品详情  返回json")
     @GetMapping(value = "/detail/{goodsId}")
     @ResponseBody
     public Result<GoodsDetailVO> detail(SeckillUser user,
@@ -136,6 +139,7 @@ public class GoodsController {
     }
 
 
+    @ApiOperation("单个商品详情  返回html")
     @GetMapping(value = "/to_detail/{goodsId}", produces = "text/html")
     @ResponseBody
     public String detail(HttpServletRequest request, HttpServletResponse response, Model model, SeckillUser user,
