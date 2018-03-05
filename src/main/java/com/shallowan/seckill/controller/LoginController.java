@@ -4,6 +4,7 @@ import com.shallowan.seckill.redis.RedisService;
 import com.shallowan.seckill.result.Result;
 import com.shallowan.seckill.service.SeckillUserService;
 import com.shallowan.seckill.vo.LoginVO;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class LoginController {
     }
 
     @ApiOperation("登录接口")
+    @ApiImplicitParam(name = "loginVO", value = "登录实体", required = true, dataType = "LoginVO")
     @RequestMapping("/do_login")
     @ResponseBody
     public Result<String> doLogin(HttpServletResponse response, @Valid LoginVO loginVO) {

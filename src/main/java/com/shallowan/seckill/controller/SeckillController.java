@@ -16,6 +16,8 @@ import com.shallowan.seckill.util.MD5Util;
 import com.shallowan.seckill.util.UUIDUtil;
 import com.shallowan.seckill.validator.NeedLogin;
 import com.shallowan.seckill.vo.GoodsVO;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.InitializingBean;
@@ -61,7 +63,6 @@ import java.util.Map;
  * 对接口做限流
  * 思路：
  * 用拦截器减少对业务侵入
- *
  */
 @Controller
 @RequestMapping("/seckill")
@@ -96,10 +97,10 @@ public class SeckillController implements InitializingBean {
         }
 
         for (GoodsVO goodsVO : goodsVOList) {
-        redisService.set(GoodsKey.getSeckillGoodsStock, "" + goodsVO.getId(), goodsVO.getStockCount());
-        localOverMap.put(goodsVO.getId(), false);
+            redisService.set(GoodsKey.getSeckillGoodsStock, "" + goodsVO.getId(), goodsVO.getStockCount());
+            localOverMap.put(goodsVO.getId(), false);
+        }
     }
-}
 
     @ApiOperation("db 数据重置接口")
     @GetMapping("/reset")
@@ -149,6 +150,10 @@ public class SeckillController implements InitializingBean {
 //    }
 
     @ApiOperation("秒杀接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, dataType = "Long"),
+            @ApiImplicitParam(name = "path", value = "秒杀个人路径", required = true, dataType = "String", paramType = "path")
+    })
     @PostMapping("/{path}/seckill")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)
@@ -191,6 +196,10 @@ public class SeckillController implements InitializingBean {
     }
 
     @ApiOperation("秒杀路径获取接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, dataType = "Long"),
+            @ApiImplicitParam(name = "verifyCode", value = "验证码", required = true, dataType = "Integer")
+    })
     @GetMapping("/path")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)
@@ -217,6 +226,7 @@ public class SeckillController implements InitializingBean {
      * @return
      */
     @ApiOperation("轮询秒杀是否成功接口")
+    @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, dataType = "Long")
     @GetMapping("/result")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)
@@ -227,6 +237,7 @@ public class SeckillController implements InitializingBean {
     }
 
     @ApiOperation("获取验证码接口")
+    @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, dataType = "Long")
     @GetMapping("/verifyCode")
     @ResponseBody
     @AccessLimit(seconds = 5, maxCount = 5)

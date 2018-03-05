@@ -11,6 +11,7 @@ import com.shallowan.seckill.service.OrderService;
 import com.shallowan.seckill.service.SeckillService;
 import com.shallowan.seckill.vo.GoodsVO;
 import com.shallowan.seckill.vo.OrderDetailVO;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -32,6 +33,7 @@ public class OrderController {
     private GoodsService goodsService;
 
     @ApiOperation("订单详情接口")
+    @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Long")
     @GetMapping("/detail")
     @ResponseBody
     public Result<OrderDetailVO> seckill(SeckillUser seckillUser,
