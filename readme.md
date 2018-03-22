@@ -1,9 +1,7 @@
 ![](https://raw.githubusercontent.com/b2stry/imgrepo/master/2018.png)
  
-## 高并发的瓶颈在数据库
-
-测试地址：http://47.93.242.254:8088/login/to_login
-请先访问：http://47.93.242.254:8088/seckill/reset
+测试地址：http://47.93.242.254:8088/login/to_login<br>
+请先访问：http://47.93.242.254:8088/seckill/reset<br>
 如果响应为：
 ```
 {
@@ -14,6 +12,7 @@
 ```
 再进行登录。
 
+## 高并发的瓶颈在数据库
 ### 减少数据库访问
 思路：<br>
 1. 系统初始化，把商品库存数量加载到Redis<br>
