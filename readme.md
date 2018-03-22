@@ -1,7 +1,8 @@
 ![](https://raw.githubusercontent.com/b2stry/imgrepo/master/2018.png)
  
-测试地址：http://47.93.242.254:8088/login/to_login<br>
-请先访问：http://47.93.242.254:8088/seckill/reset<br>
+
+### 测试地址：http://47.93.242.254:8088/login/to_login<br>
+### 请先访问：http://47.93.242.254:8088/seckill/reset<br>
 如果响应为：
 ```
 {
