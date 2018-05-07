@@ -89,7 +89,6 @@ public class GoodsController {
         }
 
         return html;
-
     }
 
     @ApiOperation("单个商品详情  返回json")
